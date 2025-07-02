@@ -1,16 +1,15 @@
 ﻿using PathOfRegexConsole.Interfaces;
 
-namespace PathOfRegexConsole
+namespace PathOfRegexConsole.MenuItems
 {
-    internal class MenuItem(int id, string name, Action action) : IMenuItem
+    internal class ExitMenuItem(int id, string name) : IMenuItem
     {
         public int Id { get; set; } = id;
         public string Name { get; set; } = name;
-        public Action Action { get; set; } = action;
 
         public void Invoke()
         {
-            Action?.Invoke();
+            Environment.Exit(0);
         }
     }
 }

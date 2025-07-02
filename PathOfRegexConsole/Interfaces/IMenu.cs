@@ -1,7 +1,9 @@
-﻿namespace PathOfRegexConsole.Interfaces
+﻿using PathOfRegexConsole.MenuItems;
+
+namespace PathOfRegexConsole.Interfaces
 {
     internal interface IMenu
     {
-        List<MenuItem> Items { get; }
+        List<IMenuItem> Items { get; }
     }
 }

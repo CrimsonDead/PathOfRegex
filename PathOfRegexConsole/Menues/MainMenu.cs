@@ -1,28 +1,24 @@
 ﻿using PathOfRegexConsole.Interfaces;
+using PathOfRegexConsole.MenuItems;
 
 namespace PathOfRegexConsole.Menues
 {
     internal class MainMenu : IMenu
     {
-        public List<MenuItem> Items { get; set; }
+        public List<IMenuItem> Items { get; set; }
 
         public MainMenu() 
         {
             Items =
-            [
-                new MenuItem(1, "New Regex", OpenRegexMenu),
-                new MenuItem(2, "Exit", Exit)
-            ];
+                [
+                    new SubMenuItem(1, "New Regex", OpenRegexMenu),
+                    new ExitMenuItem(2, "Exit")
+                ];
         }
 
-        private void OpenRegexMenu()
+        private IMenu OpenRegexMenu()
         {
-            Console.WriteLine("Открыто новое меню regex");
-        }
-
-        private void Exit()
-        {
-            Environment.Exit(0);
+            return new NewRegexMenu();
         }
     }
 }

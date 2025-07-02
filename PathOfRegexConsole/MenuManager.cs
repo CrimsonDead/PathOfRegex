@@ -1,61 +1,57 @@
 ﻿using PathOfRegexConsole.Interfaces;
+using PathOfRegexConsole.MenuItems;
 
 namespace PathOfRegexConsole
 {
-    internal class MenuManager
+    internal class MenuManager : Manager
     {
-        public IMenu Menu { get; set; }
+        public Stack<IMenu> History { get; set; } = new Stack<IMenu>();
 
-        public MenuManager(IMenu menu)
+        public MenuManager(IMenu menu) : base(menu) { }
+
+        public override void Run()
         {
-            Menu = menu;
+            ShowMenu();
+
+            base.Run();
         }
 
-        public void Run()
+        protected override void InvokeSubMenuItem(SubMenuItem subMenuItem)
         {
-            while (true)
+            History.Push(Menu);
+
+            base.InvokeSubMenuItem(subMenuItem);
+        }
+
+        protected virtual void InvokeActionMenuItem(ActionMenuItem actionMenuItem)
+        {
+            base.InvokeActionMenuItem(actionMenuItem);
+
+            ShowMenu();
+        }
+
+        protected override IMenuItem? GetSelectedItem(ConsoleKeyInfo input)
+        {            
+            if (input.Key == ConsoleKey.Backspace)
             {
+                if (History.Count > 0)
+                    Menu = History.Pop();
+
                 ShowMenu();
-
-                var selectedItem = GetSelectedItem();
-
-                if (selectedItem != null)
-                {
-                    selectedItem.Invoke();
-                }
-            }
-        }
-
-        public IMenuItem GetSelectedItem()
-        {
-            string input = string.Empty;
-
-            if (char.IsDigit(Console.ReadKey().KeyChar) )
-            {
-                input = 
-            }
-
-            if (int.TryParse(Console.ReadLine(), out int choice))
-            {
-                return Menu.Items.Find(item => item.Id == choice);
-            }
-            else
-            {
-                Console.WriteLine("Неправильный ввод. Нажмите любую клавишу для продолжения...");
-                Console.ReadKey();
 
                 return null;
             }
+            else
+            {
+                return base.GetSelectedItem(input);
+            }
         }
 
-        public void ShowMenu()
+        protected override void ShowMenu()
         {
             Console.Clear();
 
-            foreach (IMenuItem item in Menu.Items)
-            {
-                Console.WriteLine($"{item.Id}. {item.Name}");
-            }
+            base.ShowMenu();
         }
     }
 }
