@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35514.174 d17.12
+VisualStudioVersion = 17.12.35514.174
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathOfRegex", "PathOfRegex\PathOfRegex.csproj", "{6D0DC87D-41AE-4846-863A-7D3C225D5FAC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathOfRegex", "PathOfRegex\PathOfRegex.csproj", "{6D0DC87D-41AE-4846-863A-7D3C225D5FAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathOfRegexConsole", "PathOfRegexConsole\PathOfRegexConsole.csproj", "{A632906D-22E6-4437-8F63-9F85BF0C8EC2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PathOfRegexConsole", "PathOfRegexConsole\PathOfRegexConsole.csproj", "{A632906D-22E6-4437-8F63-9F85BF0C8EC2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PathOfRegexDB", "DBLayer\PathOfRegexDB.csproj", "{4A752384-DEB5-4614-B7D0-7A8E311EDAFD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,8 +23,15 @@ Global
 		{A632906D-22E6-4437-8F63-9F85BF0C8EC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A632906D-22E6-4437-8F63-9F85BF0C8EC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A632906D-22E6-4437-8F63-9F85BF0C8EC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A752384-DEB5-4614-B7D0-7A8E311EDAFD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A752384-DEB5-4614-B7D0-7A8E311EDAFD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A752384-DEB5-4614-B7D0-7A8E311EDAFD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A752384-DEB5-4614-B7D0-7A8E311EDAFD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {84EF6288-41B4-4E2F-BF54-93EDA9AA8684}
 	EndGlobalSection
 EndGlobal
