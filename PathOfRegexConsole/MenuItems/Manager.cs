@@ -6,13 +6,10 @@ namespace PathOfRegexConsole.MenuItems
     {
         public IMenu Menu { get; set; }
 
-        public Manager(IMenu menu)
-        {
-            Menu = menu;
-        }
-
         public virtual void Run()
         {
+            Show();
+
             while (true)
             {
                 var selectedItem = GetSelectedItem(Console.ReadKey(true));
@@ -48,10 +45,15 @@ namespace PathOfRegexConsole.MenuItems
         {
             Menu = subMenuItem.Invoke();
 
-            ShowMenu();
+            Show();
         }
 
-        protected virtual void InvokeActionMenuItem(ActionMenuItem actionMenuItem) => actionMenuItem.Invoke();
+        protected virtual void InvokeActionMenuItem(ActionMenuItem actionMenuItem)
+        {
+            actionMenuItem.Invoke();
+
+            Show();
+        }
 
         protected virtual void InvokeExitMenuItem(ExitMenuItem exitMenuItem) => exitMenuItem.Invoke();
 
@@ -73,15 +75,15 @@ namespace PathOfRegexConsole.MenuItems
                 Console.ReadKey();
                 Console.Clear();
 
-                ShowMenu();
+                Show();
 
                 return null;
             }
         }
 
-        protected virtual void ShowMenu()
+        protected virtual void Show()
         {
-            foreach (IMenuItem item in Menu.Items)
+            foreach (IMenuItem item in Menu.Items.OrderBy(i => i.Id))
             {
                 Console.WriteLine($"{item.Id}. {item.Name}");
             }

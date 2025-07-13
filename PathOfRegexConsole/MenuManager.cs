@@ -1,4 +1,5 @@
 ﻿using PathOfRegexConsole.Interfaces;
+using PathOfRegexConsole.Menues;
 using PathOfRegexConsole.MenuItems;
 
 namespace PathOfRegexConsole
@@ -7,13 +8,9 @@ namespace PathOfRegexConsole
     {
         public Stack<IMenu> History { get; set; } = new Stack<IMenu>();
 
-        public MenuManager(IMenu menu) : base(menu) { }
-
-        public override void Run()
+        public MenuManager()
         {
-            ShowMenu();
-
-            base.Run();
+            Menu = new MainMenu();
         }
 
         protected override void InvokeSubMenuItem(SubMenuItem subMenuItem)
@@ -23,13 +20,6 @@ namespace PathOfRegexConsole
             base.InvokeSubMenuItem(subMenuItem);
         }
 
-        protected virtual void InvokeActionMenuItem(ActionMenuItem actionMenuItem)
-        {
-            base.InvokeActionMenuItem(actionMenuItem);
-
-            ShowMenu();
-        }
-
         protected override IMenuItem? GetSelectedItem(ConsoleKeyInfo input)
         {            
             if (input.Key == ConsoleKey.Backspace)
@@ -37,7 +27,7 @@ namespace PathOfRegexConsole
                 if (History.Count > 0)
                     Menu = History.Pop();
 
-                ShowMenu();
+                Show();
 
                 return null;
             }
@@ -47,11 +37,11 @@ namespace PathOfRegexConsole
             }
         }
 
-        protected override void ShowMenu()
+        protected override void Show()
         {
             Console.Clear();
 
-            base.ShowMenu();
+            base.Show();
         }
     }
 }
