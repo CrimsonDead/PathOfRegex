@@ -13,7 +13,21 @@ namespace PathOfRegexConsole.Menues
                 [
                     new ActionMenuItem(1, "Essences", ProcessEssencesAction),
                     new ActionMenuItem(2, "Tattoos", ProcessTattoosAction),
+                    new ActionMenuItem(3, "Beast", ProcessBeastsAction),
                 ];
+        }
+
+        private void ProcessBeastsAction()
+        {
+            Console.Clear();
+
+            var beasts = WebClient.GetBeastList();
+
+            beasts.Wait();
+
+            ActionManager actionManager = new ActionManager(beasts.Result);
+
+            actionManager.Run();
         }
 
         private void ProcessEssencesAction()

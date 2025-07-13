@@ -38,5 +38,10 @@
         {
             return await GetAsync("data/currencyoverview?league=Mercenaries&type=Currency");
         }
+
+        internal async Task<string> GetBeastsAsync()
+        {
+            return await GetItemAsync("Beast");
+        }
     }
 }
