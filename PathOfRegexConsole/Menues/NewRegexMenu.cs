@@ -16,24 +16,28 @@ namespace PathOfRegexConsole.Menues
                 ];
         }
 
-        private async void ProcessEssencesAction()
+        private void ProcessEssencesAction()
         {
             Console.Clear();
 
-            var essences = await WebClient.GetEssenceList();
+            var essences = WebClient.GetEssenceList();
 
-            ActionManager actionManager = new ActionManager(new ActionMenu(), essences);
+            essences.Wait();
+
+            ActionManager actionManager = new ActionManager(essences.Result);
 
             actionManager.Run();
         }
 
-        private async void ProcessTattoosAction()
+        private void ProcessTattoosAction()
         {
             Console.Clear();
 
-            var tattoos = await WebClient.GetTattoosList();
+            var tattoos = WebClient.GetTattoosList();
 
-            ActionManager actionManager = new ActionManager(new ActionMenu(), tattoos);
+            tattoos.Wait();
+
+            ActionManager actionManager = new ActionManager(tattoos.Result);
 
             actionManager.Run();
         }

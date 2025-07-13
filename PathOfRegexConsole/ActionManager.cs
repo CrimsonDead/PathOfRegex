@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
+using PathOfRegexConsole.Enums;
 using PathOfRegexConsole.Interfaces;
+using PathOfRegexConsole.Menues;
 using PathOfRegexConsole.MenuItems;
 using PathOfRegexConsole.ViewModels;
 
@@ -10,18 +12,64 @@ namespace PathOfRegexConsole
         private readonly IEnumerable<ViewDataModel> _data;
         private readonly int partCount = 5;
         private readonly int showLessCount = 15;
+        private readonly int defaultSelectionSize = 10;
+        private readonly double defaultMinDivinePrice = 1.0;
+        private readonly double defaultMinChaosPrice = 10;
 
-        public ActionManager(IMenu menu, IEnumerable<ViewDataModel> data) : base(menu)
+        public TableState TableState { get; set; }
+        public List<IMenuItem> Items { get { return Menu.Items; } }
+
+        public ActionManager(IEnumerable<ViewDataModel> data)
         {
             _data = data;
+            Menu = CreateListMenu();
         }
 
-        public override void Run()
+        private IMenu CreateListMenu()
         {
-            ShowPartData();
-            ShowMenu();
+            return new ActionMenu(
+                [
+                    new ActionMenuItem(1, "Create Regex", () => Menu = CreateRegexCreatorMenu()),
+                    GetMoreLessMenuItem()
+                ]);
+        }
 
-            base.Run();
+        private IMenu CreateRegexCreatorMenu()
+        {
+            return new ActionMenu(
+                [
+                    new ActionMenuItem(1, $"Get {defaultSelectionSize} most expensive", CreateRegexFirstN),
+                    new ActionMenuItem(1, $"Get more than {defaultMinDivinePrice} divine", CreateRegexMoreThanDivine),
+                    new ActionMenuItem(1, $"Get more than {defaultMinChaosPrice} chaos", CreateRegexMoreThanChaos),
+                ]);
+        }
+
+        private void CreateRegexFirstN()
+        {
+
+        }
+
+        private void CreateRegexMoreThanDivine()
+        {
+
+        }
+
+        private void CreateRegexMoreThanChaos()
+        {
+
+        }
+
+        private void OpenRegexMenu()
+        {
+            Items.Remove(Items.First(i => i.Id == 1));
+            Items.Add(GetMoreLessMenuItem());
+
+            TableState = TableState == TableState.Less ? TableState.More : TableState.Less;
+        }
+
+        private ActionMenuItem GetMoreLessMenuItem()
+        {
+            return new ActionMenuItem(2, TableState == TableState.More ? "Show more" : "Show less", OpenRegexMenu);
         }
 
         protected override bool Validate(IMenuItem? item)
@@ -64,7 +112,7 @@ namespace PathOfRegexConsole
                     Console.WriteLine(new string('-', columnLength.Sum() + (columnLength.Count) * 3));
                 }
 
-                if (_data.ToList().IndexOf(row) >= showLessCount)
+                if (_data.ToList().IndexOf(row) >= showLessCount && TableState == TableState.Less)
                     break;
             }
 
@@ -89,6 +137,15 @@ namespace PathOfRegexConsole
         private int GetMaxColumnLeangh(string name)
         {
             return Math.Max(_data.Max(d => d.GetType().GetProperties().First(p => p.Name == name).GetValue(d).ToString().Length), name.Length);
+        }
+
+        protected override void Show()
+        {
+            Console.Clear();
+
+            ShowPartData();
+
+            base.Show();
         }
     }
 }
