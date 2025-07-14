@@ -20,7 +20,7 @@ namespace PathOfRegexConsole
             EsseneceService esseneceService = new EsseneceService(POENinjaClient);
             ItemResponse essenceResponse = await esseneceService.GetEssencesAsync();
 
-            return essenceResponse.Lines.OrderByDescending(e => e.ChaosValue).Select(e => new ViewDataModel { Name = e.Name, ChaosValue = e.ChaosValue, DivineValue = e.DivineValue }).ToList();
+            return essenceResponse.Lines.OrderByDescending(e => e.ChaosValue).Select(e => new ViewDataModel { Name = e.Name, ChaosValue = e.ChaosValue, DivineValue = e.DivineValue, Selected = false }).ToList();
         }
 
         public static async Task<List<ViewDataModel>> GetTattoosList()
@@ -28,7 +28,15 @@ namespace PathOfRegexConsole
             TattooService tattooService = new TattooService(POENinjaClient);
             ItemResponse itemResponse = await tattooService.GetTattoosAsync();
 
-            return itemResponse.Lines.OrderByDescending(e => e.ChaosValue).Select(e => new ViewDataModel { Name = e.Name, ChaosValue = e.ChaosValue, DivineValue = e.DivineValue }).ToList();
+            return itemResponse.Lines.OrderByDescending(e => e.ChaosValue).Select(e => new ViewDataModel { Name = e.Name, ChaosValue = e.ChaosValue, DivineValue = e.DivineValue, Selected = false }).ToList();
+        }
+
+        internal static async Task<List<ViewDataModel>> GetBeastList()
+        {
+            BeastsService beastsService = new BeastsService(POENinjaClient);
+            ItemResponse itemResponse = await beastsService.GetBeastsAsync();
+
+            return itemResponse.Lines.OrderByDescending(e => e.ChaosValue).Select(e => new ViewDataModel { Name = e.Name, ChaosValue = e.ChaosValue, DivineValue = e.DivineValue, Selected = false }).ToList();
         }
     }
 }
