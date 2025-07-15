@@ -1,0 +1,6 @@
+@PathOfRegexAPI_HostAddress = http://localhost:5239
+
+GET {{PathOfRegexAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
